@@ -1,0 +1,42 @@
+<div class="loader-container" *ngIf="isLoading">
+    <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+
+<div class="container" *ngIf=" !isLoading">
+    <div class="row">
+        <div class="col-sm-3" *ngFor="let user of userList" style="padding:10px; position: relative;">
+            <div class="row users-card">
+                <div class="col-sm-2 d-flex align-items-center p-0" style="padding-left: 10px !important;">
+                    <div class="circle" appRandomColor>
+                        <p class="circle-inner">{{getInitials(user.name)}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div style="display: flex;align-content: center;justify-content: space-between;">
+                        <span class="col-sm-9" style="white-space: pre;" appCustomtooltip>{{ user.name.firstname }} {{ user.name.lastname }}</span>
+                        <span class="col-sm-3" style="text-align: end;">
+                            <img src="../../assets/pen.svg" height="16px" width="16px" style="padding: 2px;"
+                                title="Edit user" (click)="editUser(user)" class="action-button">
+                            <img src="../../assets/trash.svg" height="16px" width="16px" style="padding: 2px;"
+                                title="Delete user" (click)="deleteUser(user)" class="action-button">
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="col-sm-6 pr-0" style="white-space: pre;border-right:solid 1px black;"
+                            appCustomtooltip>{{ user.email }}</span>
+                        <span class="col-sm-6 pl-0" style="white-space: pre;" appCustomtooltip>{{ user.phone }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="col-sm-12" style="white-space: pre;" appCustomtooltip>{{
+                            user.address.city}}{{user.address.street}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
