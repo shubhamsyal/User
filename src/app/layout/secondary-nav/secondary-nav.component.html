@@ -1,0 +1,22 @@
+<nav>
+  <div class="vertical-nav">
+    <h3 class="text-gray font-weight-bold text-uppercase text p-4 dash" style="  display: flex;align-items: center;"><i
+        class="fa-solid  fa-circle-user  p-4  fa-3x dashicon"></i>Dashboard</h3>
+    <hr>
+    <ul class="nav flex-column bg-white " id="dash">
+      <li class="nav-item">
+        <span (click)="navigate('user/add')" class="nav-link text-dark font-italic active2" style="cursor: pointer;">
+          <i class="fa-solid fa-user-plus mr-3  fa-xl"></i>
+          Add new user
+        </span>
+      </li>
+      <li class="nav-item">
+        <span (click)=" navigate('users/list')" class="nav-link text-dark font-italici"  style="cursor: pointer;">
+          <i class="fa-solid fa-address-book mr-3 fa-xl"></i>
+          Users List
+        </span>
+      </li>
+    </ul>
+    <hr>
+  </div>
+</nav>

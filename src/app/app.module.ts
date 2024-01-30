@@ -15,6 +15,9 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { PaginationComponent } from './pagination/pagination.component';
+import { PrimaryNavComponent } from './layout/primary-nav/primary-nav.component';
+import { SecondaryNavComponent } from './layout/secondary-nav/secondary-nav.component';
 
 const routes: Routes =[
   { path: 'user/add', component: UserUpsertComponent },
@@ -23,7 +26,7 @@ const routes: Routes =[
   { path: '', redirectTo: 'users/list', pathMatch: 'full' },
 ]
 @NgModule({
-  declarations: [AppComponent,UserUpsertComponent, UserListComponent, RandomColorDirective, CustomtooltipDirective, ConfirmationModalComponent,],
+  declarations: [AppComponent,UserUpsertComponent, UserListComponent, RandomColorDirective, CustomtooltipDirective, ConfirmationModalComponent, PaginationComponent, PrimaryNavComponent, SecondaryNavComponent,],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
