@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ToastrService } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
@@ -23,8 +22,25 @@ export class UserListComponent implements OnInit {
   searchTerm:string = "";
   currentPage:number = 0;
   displayLength: number = 0;
+  filter:string = "asc";
+  toggle:boolean = false;
   handlePageChange(page: number): void {
     // Filter data based on the search term
+    if(this.filter === "desc"){
+      this.userList = this.userList.slice().sort(function(a, b) {
+      var nameA = a.name.firstname.toLowerCase();
+        var nameB = b.name.firstname.toLowerCase();
+      return nameB.localeCompare(nameA);
+    });
+    }
+    else{
+      this.userList = this.userList.slice().sort(function(a, b) {
+        var nameA = a.name.firstname.toLowerCase();
+        var nameB = b.name.firstname.toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    }
+
     const filteredData = this.filterDataBySearchTerm();
     this.displayLength = filteredData.length;
     // Load data based on the page number

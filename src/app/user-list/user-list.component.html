@@ -17,14 +17,31 @@
         </div>
         <div class="col-sm-9">
             <div class="container-fluid">
-                <div class="row" style="padding: 20px;position: relative;" >
+                <div class="row" style="padding: 20px;position: relative;">
                     <!-- <div class="col-sm-1"> -->
-                    <i class="fa fa-filter" aria-hidden="true" style="position: absolute;
-                    left: -16px;
-                    top: 27px;width: 10px;"></i>
+                    <div class="dropdown">
+                        <i class="fa fa-filter" aria-hidden="true" style="    position: absolute;
+                        left: -22px;
+                        top: 8px;
+                        width: 10px;cursor: pointer;" (click)="toggle = !toggle"></i>
+                        <div class="dropdown-content" *ngIf="toggle">
+                            <div (click)="filter='desc';handlePageChange(1);toggle = false"
+                                style="border-bottom: solid 1px black;padding:10px;cursor: pointer;">Desc <i
+                                    class="fa fa-sort-amount-desc"></i></div>
+                            <div (click)="filter='asc';handlePageChange(1); toggle = false"
+                                style="padding:10px;cursor: pointer;">Asc <i
+                                    class="fa fa-sort-amount-asc"></i></div>
+                        </div>
+                    </div>
                     <!-- </div>
                     <div class="col-sm-11"> -->
-                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearchChange()" style="width: 100%;">
+                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearchChange()"
+                        style="width: 100%;">
+                    <i class="fa fa-search" aria-hidden="true" style="position: absolute;
+                        right: 33px;
+                        width: 10px;
+                        top: 27px;cursor: pointer;"></i>
+
                     <!-- </div> -->
                 </div>
                 <div class="row">
@@ -87,7 +104,8 @@
                         right: 25px;cursor:pointer;" (click)="toggleActionButton(user.id)" aria-hidden="true"></i>
 
                         <span class="row action-button" style="display: none;" id="action-button{{user.id}}">
-                            <button class="col-sm-6 btn " (click)="editUser(user)" style="background-color: #73e43b;color: white; margin-left: 20%;"><i
+                            <button class="col-sm-6 btn " (click)="editUser(user)"
+                                style="background-color: #73e43b;color: white; margin-left: 20%;"><i
                                     class="fas fa-pen"></i>Edit</button>
                             <button class="col-sm-6 btn" (click)="deleteUser(user)" style="  background: red; color: white;margin-left: 5px;
                             "><i class="fa fa-trash" aria-hidden="true"></i>
@@ -95,7 +113,6 @@
                         </span>
                     </div>
                 </div>
-                {{displayLength}}
                 <div class="row" style="width: 100%;" *ngIf="userList.length <= displayLength">
                     <app-pagination [items]="userList" [itemsPerPage]="itemsPerPage"
                         (pageChange)="handlePageChange($event)"></app-pagination>
