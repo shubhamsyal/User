@@ -17,8 +17,15 @@
         </div>
         <div class="col-sm-9">
             <div class="container-fluid">
-                <div class="row" style="padding: 20px;">
-                    <i class="fa fa-filter" aria-hidden="true"></i>
+                <div class="row" style="padding: 20px;position: relative;" >
+                    <!-- <div class="col-sm-1"> -->
+                    <i class="fa fa-filter" aria-hidden="true" style="position: absolute;
+                    left: -16px;
+                    top: 27px;width: 10px;"></i>
+                    <!-- </div>
+                    <div class="col-sm-11"> -->
+                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearchChange()" style="width: 100%;">
+                    <!-- </div> -->
                 </div>
                 <div class="row">
                     <div class="col-sm-4" *ngFor="let user of currentPageData" style="padding:5px; position: relative;">
@@ -86,10 +93,10 @@
                             "><i class="fa fa-trash" aria-hidden="true"></i>
                                 Delete</button>
                         </span>
-
                     </div>
                 </div>
-                <div class="row" style="width: 100%;" *ngIf="userList.length !== currentPageData.length">
+                {{displayLength}}
+                <div class="row" style="width: 100%;" *ngIf="userList.length <= displayLength">
                     <app-pagination [items]="userList" [itemsPerPage]="itemsPerPage"
                         (pageChange)="handlePageChange($event)"></app-pagination>
                 </div>

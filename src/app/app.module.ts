@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PaginationComponent } from './pagination/pagination.component';
 import { PrimaryNavComponent } from './layout/primary-nav/primary-nav.component';
 import { SecondaryNavComponent } from './layout/secondary-nav/secondary-nav.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes =[
   { path: 'user/add', component: UserUpsertComponent },
@@ -32,6 +33,7 @@ const routes: Routes =[
     BrowserModule,
     HttpClientModule,
     MatDialogModule,
+    FormsModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,

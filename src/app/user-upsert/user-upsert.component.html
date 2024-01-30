@@ -43,8 +43,9 @@
                     <label for="phone">Phone:</label>
                     <input type="text" id="phone" formControlName="phone" class="form-control" />
                 </div>
-
-                <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Submit</button>
+                <div style="margin-top: 20px;">
+                    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
     </div>

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
@@ -19,11 +20,37 @@ export class UserListComponent implements OnInit {
   constructor(private dataService: DataService, private router: Router, private dialog: MatDialog, private toster: ToastrService) { }
   currentPageData: any[] = [];
   itemsPerPage:number = 9;
+  searchTerm:string = "";
+  currentPage:number = 0;
+  displayLength: number = 0;
   handlePageChange(page: number): void {
+    // Filter data based on the search term
+    const filteredData = this.filterDataBySearchTerm();
+    this.displayLength = filteredData.length;
     // Load data based on the page number
-    const startIndex = (page - 1) * this.itemsPerPage; // Assuming 5 items per page
+    const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.currentPageData = this.userList.slice(startIndex, endIndex);
+    this.currentPageData = filteredData.slice(startIndex, endIndex);
+  }
+
+  filterDataBySearchTerm(): any[] {
+    // If no search term, return the original data
+    if (!this.searchTerm.trim()) {
+      return this.userList;
+    }
+
+    // Otherwise, filter the data based on the search term
+    return this.userList.filter(item =>
+      Object.values(item).some(value =>
+        String(value).toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
+    );
+  }
+
+  onSearchChange(): void {
+    // When the search term changes, reset to the first page
+    this.currentPage = 1;
+    this.handlePageChange(this.currentPage);
   }
   ngOnInit(): void {
     try {
