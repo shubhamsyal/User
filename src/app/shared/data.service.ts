@@ -9,16 +9,25 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class DataService {
+  // using BehaviorSubject to transfer userlist from one component to another
   private userListSubject = new BehaviorSubject<any[]>([]);
   userList$ = this.userListSubject.asObservable();
 
-  private selectedUserSubject = new BehaviorSubject<any>(null);
-  selectedUser$ = this.selectedUserSubject.asObservable();
+  // using  to transfer selected user from one component to another
+  userInfo: any;
+
+  setUserInfo(info: string) {
+    this.userInfo = info;
+  }
+  getUserInfo(){
+    return this.userInfo;
+  }
 
   private apiUrl = 'https://fakestoreapi.com/users'; // Dummy API URL
 
   constructor(private http: HttpClient) { }
 
+  // will return dummy data and saves it
   getDummyUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl).pipe(
       map((data: any) => {
@@ -32,10 +41,7 @@ export class DataService {
     return this.userList$;
   }
 
-  getSelectedUser(): Observable<any> {
-    return this.selectedUser$;
-  }
-
+  // creates new user also validates if email or phone number already linked with other user or not
   addUser(user: any) {
     let _returnObject = {
       action: true,
@@ -43,11 +49,15 @@ export class DataService {
     }
     try {
       const userList = this.userListSubject.value;
+
+      // Check if a user with the same email or number already exists
       const isDuplicate = userList.some((u) => u.email === user.email || u.phone === user.phone);
+
       if (isDuplicate) {
         _returnObject.action = false;
         _returnObject.message = 'User with the same email or number already exists!';
       } else {
+        // Create the user if not a duplicate
         user.id = Date.now();
         userList.push(user);
         this.userListSubject.next(userList);
@@ -61,18 +71,19 @@ export class DataService {
     }
   }
 
+  // update existing user also validates if email or phone number already linked with other user or not
   updateUser(user: any) {
     let _returnObject = {
       action: true,
       message: 'User updated successfully'
     };
-  
+
     try {
       const userList = this.userListSubject.value;
-  
+
       // Check if a user with the same email or number already exists
       const isDuplicate = userList.some(u => u.id !== user.id && (u.email === user.email || u.phone === user.phone));
-  
+
       if (isDuplicate) {
         _returnObject.action = false;
         _returnObject.message = 'User with the same email or number already exists!';
@@ -84,7 +95,7 @@ export class DataService {
           this.userListSubject.next([...userList]);  // Using spread operator to create a new array
         }
       }
-  
+
       return _returnObject;
     } catch (err) {
       _returnObject.action = false;
@@ -93,8 +104,8 @@ export class DataService {
       return _returnObject;
     }
   }
-  
 
+  // delete user expects an userid
   deleteUser(userId: number) {
     let _returnObject = {
       action: true
@@ -109,16 +120,5 @@ export class DataService {
       console.log(err)
       return _returnObject;
     }
-  }
-
-  setSelectedUser(user: any): void {
-    this.selectedUserSubject.next(user);
-  }
-
-  getUserById(userId: number): Observable<any> {
-    return this.userList$.pipe(
-      map((data: any) => data.find((user: any) => user.id === userId)
-      )
-    );
   }
 }

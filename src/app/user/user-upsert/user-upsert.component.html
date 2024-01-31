@@ -1,4 +1,4 @@
-<!-- user-upsert.component.html -->
+<!-- loader when site gets load will display -->
 <div class="loader-container" *ngIf="isLoading">
     <div class="lds-ellipsis">
         <div></div>
@@ -7,15 +7,23 @@
         <div></div>
     </div>
 </div>
-<!-- Your form -->
+
+<!-- after loading -->
 <div class="container-fluid" *ngIf="!isLoading">
     <div class="row outline">
+
+        <!-- it will show top navbar -->
         <app-primary-nav class="outline"></app-primary-nav>
+        <!-- it will show top navbar -->
     </div>
     <div class="row">
         <div class="col-sm-3 outline" style="height: 100vw;background-color: #E5C397;">
+
+            <!-- will show vertical navbar -->
             <app-secondary-nav></app-secondary-nav>
+            <!-- will show vertical navbar -->
         </div>
+        <!-- form  -->
         <div class="col-sm-9" style="background-image: url('../../assets/back.jpg');background-repeat: no-repeat;  background-attachment: fixed;
         background-size: cover;">
             <div style="text-align: center;
@@ -23,12 +31,11 @@
                 <h5 *ngIf="!isEdit" style="font-size: 35px;">
                     Create New User
                 </h5>
-                <h5 *ngIf="isEdit"  style="font-size: 35px;">
+                <h5 *ngIf="isEdit" style="font-size: 35px;">
                     Edit user {{ userForm.get('name.firstname')?.value }}
                 </h5>
             </div>
             <div class="container custom-form">
-
                 <div>
                     <i class="fa-solid fa-user mr-3  fa-xl" style="position: absolute;top: 25px ;"></i>
                     <i class="fa-solid fa-city mr-3  fa-xl" style="position: absolute;top: 25px ;
@@ -38,20 +45,29 @@
                     right: 10px;"></i>
                 </div>
                 <div style="margin-top: 35px;">
+
+                    <!-- progressbar -->
                     <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+                    <!-- progressbar -->
                 </div>
                 <div>
+
+                    <!-- stepwise navbar -->
                     <form [formGroup]="userForm" class="form-group mt-3" (ngSubmit)="onSubmit()">
                         <!-- Step 1 -->
                         <div formGroupName="name" *ngIf="currentStep === 1" class="form-group">
                             <label for="firstname">First Name:</label>
-                            <input type="text" id="firstname" formControlName="firstname" class="form-control" (click)="firstNameRequired = true"/>
-                            <div *ngIf="firstNameRequired && userForm.get('name.firstname')?.hasError('required')" class="error-message">
+                            <input type="text" id="firstname" formControlName="firstname" class="form-control"
+                                (click)="firstNameRequired = true" />
+                            <div *ngIf="firstNameRequired && userForm.get('name.firstname')?.hasError('required')"
+                                class="error-message">
                                 *First name is required.
                             </div>
                             <label for="lastname">Last Name:</label>
-                            <input type="text" id="lastname" formControlName="lastname" class="form-control" (click)="lastNameRequired  = true" />
-                            <div *ngIf="lastNameRequired && userForm.get('name.lastname')?.hasError('required')" class="error-message">
+                            <input type="text" id="lastname" formControlName="lastname" class="form-control"
+                                (click)="lastNameRequired  = true" />
+                            <div *ngIf="lastNameRequired && userForm.get('name.lastname')?.hasError('required')"
+                                class="error-message">
                                 *Last name is required.
                             </div>
                         </div>
@@ -59,13 +75,17 @@
                         <!-- Step 2 -->
                         <div formGroupName="address" class="form-group" *ngIf="currentStep === 2">
                             <label for="city">City:</label>
-                            <input type="text" id="city" formControlName="city" class="form-control" (click)="cityNameRequired = true"/>
-                            <div *ngIf=" cityNameRequired && userForm.get('address.city')?.hasError('required')" class="error-message">
+                            <input type="text" id="city" formControlName="city" class="form-control"
+                                (click)="cityNameRequired = true" />
+                            <div *ngIf=" cityNameRequired && userForm.get('address.city')?.hasError('required')"
+                                class="error-message">
                                 *city name is required.
                             </div>
                             <label for="street">Street:</label>
-                            <input type="text" id="street" formControlName="street" class="form-control" (click)="streetNameRequired = true"/>
-                            <div *ngIf="streetNameRequired && userForm.get('address.street')?.hasError('required')" class="error-message">
+                            <input type="text" id="street" formControlName="street" class="form-control"
+                                (click)="streetNameRequired = true" />
+                            <div *ngIf="streetNameRequired && userForm.get('address.street')?.hasError('required')"
+                                class="error-message">
                                 *Street name is required.
                             </div>
                         </div>
@@ -73,24 +93,27 @@
                         <!-- Step 3 -->
                         <div *ngIf="currentStep === 3">
                             <label for="email">Email:</label>
-                            <input class="form-control" type="email" id="email" formControlName="email" (click)="emailRequired = true"/>
-                            <div *ngIf="emailRequired && userForm.get('email')?.hasError('required')" class="error-message">
+                            <input class="form-control" type="email" id="email" formControlName="email"
+                                (click)="emailRequired = true" />
+                            <div *ngIf="emailRequired && userForm.get('email')?.hasError('required')"
+                                class="error-message">
                                 *Email is required.
                             </div>
                             <div *ngIf="userForm.get('email')?.hasError('email')" class="error-message">
                                 *Please enter a valid email address.
                             </div>
-
                             <label for="phone">Phone:</label>
-                            <input class="form-control" type="text" id="phone" formControlName="phone" (click)="phoneRequired = true" (keyup)="onPhoneNumberInput($event)" />
-                            <div *ngIf="phoneRequired && userForm.get('phone')?.hasError('required')" class="error-message">
+                            <input class="form-control" type="text" id="phone" formControlName="phone"
+                                (click)="phoneRequired = true" (keyup)="onPhoneNumberInput($event)" />
+                            <div *ngIf="phoneRequired && userForm.get('phone')?.hasError('required')"
+                                class="error-message">
                                 *Phone is required.
                             </div>
                             <div *ngIf="userForm.get('phone')?.hasError('pattern')" class="error-message">
                                 *Please enter a valid phone number.
                             </div>
                         </div>
-
+                        <!-- action buttons -->
                         <div class="navigation-buttons" style="display: flex;
                         justify-content: space-between;margin-top: 55px;">
                             <div>
@@ -99,7 +122,6 @@
                                 <button type="button" (click)="nextStep()" *ngIf="currentStep < 3" class="navbtn">Next
                                     &raquo;</button>
                             </div>
-
                             <button type="submit" *ngIf="currentStep === 3"
                                 class="cssbuttons-io-button cssbuttons-io-button-sure">Submit
                                 <div class="icon">
@@ -112,63 +134,9 @@
                                 </div>
                             </button>
                         </div>
+                        <!-- action buttons -->
                     </form>
-
-                    <!-- <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="container mt-5">
-                        <div formGroupName="name" class="form-group">
-                            <label for="firstname">First Name:</label>
-                            <input type="text" id="firstname" formControlName="firstname" class="form-control" />
-                            <div *ngIf="userForm.get('name.firstname')??.hasError('required')">
-                                First name is required.
-                            </div>
-                            <label for="lastname">Last Name:</label>
-                            <input type="text" id="lastname" formControlName="lastname" class="form-control" />
-                            <div *ngIf="userForm.get('name.lastname')??.hasError('required')">
-                                Last name is required.
-                            </div>
-                        </div>
-
-                        <div formGroupName="address" class="form-group">
-                            <label for="city">City:</label>
-                            <input type="text" id="city" formControlName="city" class="form-control" />
-                            <div *ngIf="userForm.get('address.city')??.hasError('required')">
-                                city name is required.
-                            </div>
-                            <label for="street">Street:</label>
-                            <input type="text" id="street" formControlName="street" class="form-control" />
-                            <div *ngIf="userForm.get('address.street')??.hasError('required')">
-                                Street name is required.
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" formControlName="email" class="form-control" />
-                            <div *ngIf="userForm.get('email')??.hasError('required')">
-                                Email is required.
-                            </div>
-                            <div *ngIf="userForm.get('email')??.hasError('pattern')">
-                                Please enter a valid email address.
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number:</label>
-                            <input type="text" (keyup)="onPhoneNumberInput($event)" id="phone" formControlName="phone"
-                                class="form-control" />
-                            <div *ngIf="userForm.get('phone')??.hasError('required')">
-                                Phone number is required.
-                            </div>
-                            <div *ngIf="userForm.get('phone')??.hasError('pattern')">
-                                Please enter a valid phone number.
-                            </div>
-                        </div>
-                        <div style="margin-top: 20px;">
-                            <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form> -->
                 </div>
-
             </div>
         </div>
     </div>

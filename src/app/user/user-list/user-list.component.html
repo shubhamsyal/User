@@ -1,3 +1,4 @@
+<!-- loader -->
 <div class="loader-container" *ngIf="isLoading">
     <div class="lds-ellipsis">
         <div></div>
@@ -6,20 +7,28 @@
         <div></div>
     </div>
 </div>
+<!-- loader -->
 
+<!-- main page -->
 <div class="container-fluid" *ngIf=" !isLoading">
     <div class="row outline">
+        <!-- top navbar -->
         <app-primary-nav></app-primary-nav>
+        <!-- top navbar -->
     </div>
     <div class="row">
         <div class="col-sm-3 outline" style="height: 100vw; background-color: #E5C397;">
+            <!-- vertical navbar -->
             <app-secondary-nav></app-secondary-nav>
+            <!-- vertical navbar -->
         </div>
+        <!-- lists container -->
         <div class="col-sm-9" style="background-image: url('../../assets/back.jpg');background-repeat: no-repeat;  background-attachment: fixed;
         background-size: cover;">
             <div class="container-fluid">
+                <!-- search and filter -->
                 <div class="row" style="padding: 20px; background: white; position: relative; 
-                border-radius: 10px; margin-top: 12px; margin-bottom: 12px;">
+                 border-radius: 10px; margin-top: 12px; margin-bottom: 12px;">
                     <div class="dropdown">
                         <i class="fa fa-filter" aria-hidden="true" style="position: absolute;
                         left: -3px;
@@ -41,7 +50,10 @@
                         width: 10px;
                         top: 27px;cursor: pointer !important;"></i>
                 </div>
+                <!-- search and filter -->
+
                 <div class="row">
+                    <!-- user data cards -->
                     <div class="col-sm-4" *ngFor="let user of currentPageData" style="padding:5px; position: relative;">
                         <div class="container-fluid">
                             <div class="row users-card" id="user-card{{user.id}}">
@@ -75,7 +87,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- action buttons to delete and edit -->
                         <i class="fa fa-ellipsis-v" style="position: absolute;
                         top: 10px;
                         right: 25px;cursor:pointer;" (click)="toggleActionButton(user.id)" aria-hidden="true"></i>
@@ -87,16 +99,19 @@
                             <button class="col-sm-6 btn" (click)="deleteUser(user)" style="  background: red; color: white !important;margin-left: 5px;
                             "><i class="fa fa-trash" aria-hidden="true"></i>
                                 Delete</button>
-
                         </span>
+                        <!-- action buttons to delete and edit -->
                     </div>
+                    <!-- user data cards -->
                 </div>
+                <!-- pagination -->
                 <div class="row" style="width: 100%;" *ngIf="userList.length > currentPageData.length">
                     <app-pagination [items]="userList" [itemsPerPage]="itemsPerPage"
                         (pageChange)="handlePageChange($event)"></app-pagination>
                 </div>
+                <!-- pagination -->
             </div>
-
         </div>
+        <!-- lists container -->
     </div>
 </div>

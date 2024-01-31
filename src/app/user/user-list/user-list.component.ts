@@ -13,16 +13,19 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./user-list.component.css'],
 })
 export class UserListComponent implements OnInit {
-
+  // initializing variables
   userList!: any[];
   isLoading: boolean = true;
-  constructor(private dataService: DataService, private router: Router, private dialog: MatDialog, private toster: ToastrService) { }
   currentPageData: any[] = [];
   itemsPerPage: number = 9;
   searchTerm: string = "";
   currentPage: number = 0;
   filter: string = "asc";
   toggle: boolean = false;
+  constructor(private dataService: DataService, private router: Router, private dialog: MatDialog, private toster: ToastrService) { }
+
+  // function will take all the data in user list and sort accordingly
+  //  and after that it will check searched term and return data
   handlePageChange(page: number): void {
     // Filter data based on the search term
     if (this.filter === "desc") {
@@ -42,11 +45,14 @@ export class UserListComponent implements OnInit {
 
     const filteredData = this.filterDataBySearchTerm();
     // Load data based on the page number
+
+    // slicing data display on page wise per page 9
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.currentPageData = filteredData.slice(startIndex, endIndex);
   }
 
+  // returns matching results for searched
   filterDataBySearchTerm(): any[] {
     // If no search term, return the original data
     if (!this.searchTerm.trim()) {
@@ -66,6 +72,8 @@ export class UserListComponent implements OnInit {
     this.currentPage = 1;
     this.handlePageChange(this.currentPage);
   }
+
+  // getting data from dummy api when there is no data locally
   ngOnInit(): void {
     try {
       this.dataService.getUserList().subscribe(users => {
@@ -88,10 +96,16 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  // on action button edit it will change the route by passing the id of the user to be edited
   editUser(userData: any): void {
+    this.sendUserInfo(userData)
     this.router.navigate(['/user/edit', userData.id]);
   }
+  sendUserInfo(userData:any) {
+    this.dataService.setUserInfo(userData);
+  }
 
+  // will send id to service and it will delete this user
   deleteUser(userData: any): void {
     this.dialog.open(ConfirmationModalComponent, {
       data: { action: "delete" }
@@ -109,6 +123,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  // returns initials to diplay on user cards instead of images
   getInitials(name: any): string {
     // Get the first character of each name and concatenate them
     const firstInitial = name.firstname.charAt(0).toUpperCase();
@@ -116,6 +131,8 @@ export class UserListComponent implements OnInit {
 
     return firstInitial + lastInitial;
   }
+
+  // this will toggle action buttons on click on three dots
   toggleActionButton(id: number) {
     // Get the button element by ID
     var actionButton: any = document.getElementById(`action-button${id}`);

@@ -1,5 +1,3 @@
-// src/app/user/user-upsert/user-upsert.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./user-upsert.component.css'],
 })
 export class UserUpsertComponent implements OnInit {
+
+  // initializing variables
   userForm!: FormGroup;
   isEdit: boolean = false;
   userId!: number;
@@ -25,6 +25,7 @@ export class UserUpsertComponent implements OnInit {
   streetNameRequired: boolean = false;
   emailRequired: boolean = false;
   phoneRequired: boolean = false;
+  currentStep: number = 1;
   emailPattern: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   constructor(
     private fb: FormBuilder,
@@ -41,8 +42,7 @@ export class UserUpsertComponent implements OnInit {
     }, 2000);
     this.initializeForm();
   }
-  currentStep = 1;
-
+  // initializing form 
   private initializeForm(): void {
     this.userForm = this.fb.group({
       id: [0],
@@ -63,23 +63,25 @@ export class UserUpsertComponent implements OnInit {
         ],
       ],
     });
-
+    // it will set user data into the form when you select user to edit
     this.route.params.subscribe((params) => {
       this.userId = +params['id'];
       if (this.userId) {
         this.isEdit = true;
-        this.dataService.getUserById(this.userId).subscribe((user: any) => {
-          this.userForm.patchValue(user);
-        });
+        let info = this.dataService.getUserInfo();
+        if(info){
+          this.userForm.patchValue(info)
+        }
+        else{
+          this.router.navigate(['/users/list']);
+        }
       }
+
     });
   }
 
-  // Helper method to get the current step's form group
-  get currentStepFormGroup() {
-    return this.userForm.get(`step${this.currentStep}`) as FormGroup;
-  }
-
+  // for stepwise form next button function which will check if
+  //  the visible inbuts are filled or not and shows next block of input
   nextStep() {
     if (this.currentStep === 1 && !this.userForm.get('name.firstname')?.value && !this.userForm.get('name.lastname')?.value) {
       this.firstNameRequired = true;
@@ -97,6 +99,8 @@ export class UserUpsertComponent implements OnInit {
     }
   }
 
+  // for stepwise form prev button function which will check if 
+  // the visible inbuts are filled or not and shows prev block of input
   previousStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
@@ -104,24 +108,29 @@ export class UserUpsertComponent implements OnInit {
     }
   }
 
+  // on form submit it will check if it is editing than call edit function otherwise
+  // add user function and also checks and returns success or error on bases of validations
   onSubmit(): void {
     if (this.userForm.valid) {
       const user = this.userForm.value;
       if (this.isEdit) {
+
+        //modal for confirmation.
         this.dialog.open(ConfirmationModalComponent, {
           data: { action: "edit" }
-        }).afterClosed().subscribe(result => {
-          if (result) {
-            let _result = this.dataService.updateUser(user);
-            if (_result.action) {
-              this.toster.success(`User ${user.name.firstname} ${user.name.lastname} has been Updated`, "Updated");
-              this.router.navigate(['/users/list']);
+        })
+          .afterClosed().subscribe(result => {
+            if (result) {
+              let _result = this.dataService.updateUser(user);
+              if (_result.action) {
+                this.toster.success(`User ${user.name.firstname} ${user.name.lastname} has been Updated`, "Updated");
+                this.router.navigate(['/users/list']);
+              }
+              else {
+                this.toster.error(_result.message, "Error")
+              }
             }
-            else {
-              this.toster.error(_result.message, "Error")
-            }
-          }
-        });
+          });
       } else {
         let _result = this.dataService.addUser(user);
         if (_result.action) {
@@ -134,13 +143,13 @@ export class UserUpsertComponent implements OnInit {
         }
       }
     }
-
   }
+
+  //function will not let user to type alphabets in phone number field
   onPhoneNumberInput(event: any): void {
     const input = event.target.value;
     // Remove non-numeric characters from the input
     const numericInput = input.replace(/[^0-9]/g, '');
-    // Update the input field with the numeric value
     event.target.value = numericInput;
   }
 }

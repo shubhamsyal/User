@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
 })
 export class SecondaryNavComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  navigate(route:string){
+  // navigates to the clicked route
+  navigate(route: string) {
     this.router.navigate([route]);
   }
 

@@ -11,5 +11,4 @@ export class PrimaryNavComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
