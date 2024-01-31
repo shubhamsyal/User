@@ -38,13 +38,15 @@ export class DataService {
 
   addUser(user: any) {
     let _returnObject = {
-      action: true
+      action: true,
+      message: "User created"
     }
     try {
       const userList = this.userListSubject.value;
-      const isDuplicate = userList.some((u) => u.email === user.email);
+      const isDuplicate = userList.some((u) => u.email === user.email || u.phone === user.phone);
       if (isDuplicate) {
-        console.error('User already exists!');
+        _returnObject.action = false;
+        _returnObject.message = 'User with the same email or number already exists!';
       } else {
         user.id = Date.now();
         userList.push(user);
@@ -53,6 +55,7 @@ export class DataService {
       return _returnObject;
     } catch (err) {
       _returnObject.action = false;
+      _returnObject.message = "An error occured";
       console.log(err)
       return _returnObject;
     }
@@ -60,22 +63,37 @@ export class DataService {
 
   updateUser(user: any) {
     let _returnObject = {
-      action: true
-    }
+      action: true,
+      message: 'User updated successfully'
+    };
+  
     try {
       const userList = this.userListSubject.value;
-      const index = userList.findIndex((u) => u.id === user.id);
-      if (index !== -1) {
-        userList[index] = user;
-        this.userListSubject.next(userList);
+  
+      // Check if a user with the same email or number already exists
+      const isDuplicate = userList.some(u => u.id !== user.id && (u.email === user.email || u.phone === user.phone));
+  
+      if (isDuplicate) {
+        _returnObject.action = false;
+        _returnObject.message = 'User with the same email or number already exists!';
+      } else {
+        // Update the user if not a duplicate
+        const index = userList.findIndex(u => u.id === user.id);
+        if (index !== -1) {
+          userList[index] = user;
+          this.userListSubject.next([...userList]);  // Using spread operator to create a new array
+        }
       }
+  
       return _returnObject;
     } catch (err) {
       _returnObject.action = false;
-      console.log(err)
+      _returnObject.message = 'An error occured';
+      console.error(err);
       return _returnObject;
     }
   }
+  
 
   deleteUser(userId: number) {
     let _returnObject = {

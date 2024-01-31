@@ -34,9 +34,10 @@
 }
 
 .users-card {
+  background-color: white;
   border-radius: 5px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  width: 100%;
+  /* width: 100%; */
   height: 140px;
   cursor: default;
   padding: 28px 0px;
@@ -60,7 +61,7 @@
 }
 
 .action-button {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .loader-container {
@@ -145,7 +146,7 @@
 
 /* Style for the icon */
 .icon {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 /* Style for the dropdown content */

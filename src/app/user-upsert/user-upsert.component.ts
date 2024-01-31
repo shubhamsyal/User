@@ -17,7 +17,15 @@ export class UserUpsertComponent implements OnInit {
   userForm!: FormGroup;
   isEdit: boolean = false;
   userId!: number;
-  isLoading:boolean = true;
+  isLoading: boolean = true;
+  progress: number = 0;
+  firstNameRequired: boolean = false;
+  lastNameRequired: boolean = false;
+  cityNameRequired: boolean = false;
+  streetNameRequired: boolean = false;
+  emailRequired: boolean = false;
+  phoneRequired: boolean = false;
+  emailPattern: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -33,6 +41,7 @@ export class UserUpsertComponent implements OnInit {
     }, 2000);
     this.initializeForm();
   }
+  currentStep = 1;
 
   private initializeForm(): void {
     this.userForm = this.fb.group({
@@ -66,32 +75,72 @@ export class UserUpsertComponent implements OnInit {
     });
   }
 
+  // Helper method to get the current step's form group
+  get currentStepFormGroup() {
+    return this.userForm.get(`step${this.currentStep}`) as FormGroup;
+  }
+
+  nextStep() {
+    if (this.currentStep === 1 && !this.userForm.get('name.firstname')?.value && !this.userForm.get('name.lastname')?.value) {
+      this.firstNameRequired = true;
+      this.lastNameRequired = true;
+      return;
+    }
+    else if (this.currentStep === 2 && !this.userForm.get('address.city')?.value && !this.userForm.get('address.street')?.value) {
+      this.cityNameRequired = true;
+      this.streetNameRequired = true;
+      return;
+    }
+    if (this.currentStep < 3) {
+      this.currentStep++;
+      this.progress = this.progress + 50;
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.progress = this.progress - 50;
+    }
+  }
+
   onSubmit(): void {
-    const user = this.userForm.value;
-    if (this.isEdit) {
-      this.dialog.open(ConfirmationModalComponent, {
-        data: { action: "edit" }
-      }).afterClosed().subscribe(result => {
-        if (result) {
-          let _result = this.dataService.updateUser(user);
-          if (_result.action) {
-            this.toster.success(`User ${user.name.firstname} ${user.name.lastname} has been Updated`, "Updated");
-            this.router.navigate(['/users/list']);
+    if (this.userForm.valid) {
+      const user = this.userForm.value;
+      if (this.isEdit) {
+        this.dialog.open(ConfirmationModalComponent, {
+          data: { action: "edit" }
+        }).afterClosed().subscribe(result => {
+          if (result) {
+            let _result = this.dataService.updateUser(user);
+            if (_result.action) {
+              this.toster.success(`User ${user.name.firstname} ${user.name.lastname} has been Updated`, "Updated");
+              this.router.navigate(['/users/list']);
+            }
+            else {
+              this.toster.error(_result.message, "Error")
+            }
           }
-          else {
-            this.toster.error("An error occured", "Error")
-          }
+        });
+      } else {
+        let _result = this.dataService.addUser(user);
+        if (_result.action) {
+          this.toster.success(`New user ${user.name.firstname} ${user.name.lastname} has been created`, "Created");
+          this.router.navigate(['/users/list']);
         }
-      });
-    } else {
-      let _result = this.dataService.addUser(user);
-      if (_result.action) {
-        this.toster.success(`New user ${user.name.firstname} ${user.name.lastname} has been created`, "Created");
-        this.router.navigate(['/users/list']);
-      }
-      else {
-        this.toster.error("An error occured", "Error")
+        else {
+          console.log(_result.message)
+          this.toster.error(_result.message, "Error")
+        }
       }
     }
+
+  }
+  onPhoneNumberInput(event: any): void {
+    const input = event.target.value;
+    // Remove non-numeric characters from the input
+    const numericInput = input.replace(/[^0-9]/g, '');
+    // Update the input field with the numeric value
+    event.target.value = numericInput;
   }
 }

@@ -18,23 +18,22 @@ export class UserListComponent implements OnInit {
   isLoading: boolean = true;
   constructor(private dataService: DataService, private router: Router, private dialog: MatDialog, private toster: ToastrService) { }
   currentPageData: any[] = [];
-  itemsPerPage:number = 9;
-  searchTerm:string = "";
-  currentPage:number = 0;
-  displayLength: number = 0;
-  filter:string = "asc";
-  toggle:boolean = false;
+  itemsPerPage: number = 9;
+  searchTerm: string = "";
+  currentPage: number = 0;
+  filter: string = "asc";
+  toggle: boolean = false;
   handlePageChange(page: number): void {
     // Filter data based on the search term
-    if(this.filter === "desc"){
-      this.userList = this.userList.slice().sort(function(a, b) {
-      var nameA = a.name.firstname.toLowerCase();
+    if (this.filter === "desc") {
+      this.userList = this.userList.slice().sort(function (a, b) {
+        var nameA = a.name.firstname.toLowerCase();
         var nameB = b.name.firstname.toLowerCase();
-      return nameB.localeCompare(nameA);
-    });
+        return nameB.localeCompare(nameA);
+      });
     }
-    else{
-      this.userList = this.userList.slice().sort(function(a, b) {
+    else {
+      this.userList = this.userList.slice().sort(function (a, b) {
         var nameA = a.name.firstname.toLowerCase();
         var nameB = b.name.firstname.toLowerCase();
         return nameA.localeCompare(nameB);
@@ -42,7 +41,6 @@ export class UserListComponent implements OnInit {
     }
 
     const filteredData = this.filterDataBySearchTerm();
-    this.displayLength = filteredData.length;
     // Load data based on the page number
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -118,10 +116,10 @@ export class UserListComponent implements OnInit {
 
     return firstInitial + lastInitial;
   }
-  toggleActionButton(id:number) {
+  toggleActionButton(id: number) {
     // Get the button element by ID
-    var actionButton:any = document.getElementById(`action-button${id}`);
-    var userDiv:any = document.getElementById(`user-card${id}`);
+    var actionButton: any = document.getElementById(`action-button${id}`);
+    var userDiv: any = document.getElementById(`user-card${id}`);
 
     // Change the display property
     if (actionButton.style.display === 'none') {

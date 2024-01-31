@@ -20,6 +20,7 @@ import { PrimaryNavComponent } from './layout/primary-nav/primary-nav.component'
 import { SecondaryNavComponent } from './layout/secondary-nav/secondary-nav.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const routes: Routes =[
   { path: 'user/add', component: UserUpsertComponent },
@@ -39,6 +40,7 @@ const routes: Routes =[
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     NgbModule,
+    MatProgressBarModule
   ],
   bootstrap: [AppComponent],
 

@@ -12,108 +12,86 @@
         <app-primary-nav></app-primary-nav>
     </div>
     <div class="row">
-        <div class="col-sm-3 outline">
-            <app-secondary-nav class="outline"></app-secondary-nav>
+        <div class="col-sm-3 outline" style="height: 100vw; background-color: #E5C397;">
+            <app-secondary-nav></app-secondary-nav>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-9" style="background-image: url('../../assets/back.jpg');background-repeat: no-repeat;  background-attachment: fixed;
+        background-size: cover;">
             <div class="container-fluid">
-                <div class="row" style="padding: 20px;position: relative;">
-                    <!-- <div class="col-sm-1"> -->
+                <div class="row" style="padding: 20px; background: white; position: relative; 
+                border-radius: 10px; margin-top: 12px; margin-bottom: 12px;">
                     <div class="dropdown">
-                        <i class="fa fa-filter" aria-hidden="true" style="    position: absolute;
-                        left: -22px;
+                        <i class="fa fa-filter" aria-hidden="true" style="position: absolute;
+                        left: -3px;
                         top: 8px;
-                        width: 10px;cursor: pointer;" (click)="toggle = !toggle"></i>
+                        width: 10px;cursor: pointer!important;" (click)="toggle = !toggle"></i>
                         <div class="dropdown-content" *ngIf="toggle">
                             <div (click)="filter='desc';handlePageChange(1);toggle = false"
-                                style="border-bottom: solid 1px black;padding:10px;cursor: pointer;">Desc <i
+                                style="border-bottom: solid 1px black;padding:10px;cursor: pointer !important;">Desc <i
                                     class="fa fa-sort-amount-desc"></i></div>
                             <div (click)="filter='asc';handlePageChange(1); toggle = false"
-                                style="padding:10px;cursor: pointer;">Asc <i
+                                style="padding:10px;cursor: pointer !important;">Asc <i
                                     class="fa fa-sort-amount-asc"></i></div>
                         </div>
                     </div>
-                    <!-- </div>
-                    <div class="col-sm-11"> -->
                     <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="onSearchChange()"
-                        style="width: 100%;">
+                        style="width: 98%;margin-left:2%">
                     <i class="fa fa-search" aria-hidden="true" style="position: absolute;
                         right: 33px;
                         width: 10px;
-                        top: 27px;cursor: pointer;"></i>
-
-                    <!-- </div> -->
+                        top: 27px;cursor: pointer !important;"></i>
                 </div>
                 <div class="row">
                     <div class="col-sm-4" *ngFor="let user of currentPageData" style="padding:5px; position: relative;">
-                        <!-- <div class="container-fluid custom-card">
-                            <div class="row user-img-block">
-                                <div class="user-img" appRandomColor>
-                                    <span>{{getInitials(user.name)}}</span>
-                                </div>
-                            </div>
-                            <div class="row user-details">
-                                <div class="container ">
-                                    <div class="row"><h5 class="card-title">{{
-                                        user.name.firstname
-                                        }} {{ user.name.lastname }}</h5></div>
-                                    
-                                    <div class="row">
-                                        CONTACT DETAILS:
-                                        <span class="pr-0" style="white-space: pre;"
-                                            appCustomtooltip>{{ user.email }}</span>
-                                        <span class="pl-0" style="white-space: pre;" appCustomtooltip>{{
-                                            user.phone
-                                            }}</span>
+                        <div class="container-fluid">
+                            <div class="row users-card" id="user-card{{user.id}}">
+                                <div class="col-sm-2 d-flex align-items-center p-0"
+                                    style="padding-left: 10px !important;">
+                                    <div class="circle" appRandomColor>
+                                        <p class="circle-inner">{{getInitials(user.name)}}</p>
                                     </div>
-                                    <div class="row">
-                                        ADDRESS:
-                                        <span class="col-sm-12" style="white-space: pre;"
-                                            appCustomtooltip>{{
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <h5 class="col-sm-9" style="white-space: pre;" appCustomtooltip>{{
+                                                user.name.firstname
+                                                }} {{ user.name.lastname }}</h5>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-sm-6 pr-0"
+                                                style="white-space: pre;border-right:solid 1px black;"
+                                                appCustomtooltip>{{
+                                                user.email }}</span>
+                                            <span class="col-sm-6 pl-0" style="white-space: pre;" appCustomtooltip> {{
+                                                user.phone
+                                                }}</span>
+                                        </div>
+                                        <div class="row">
+                                            <span class="col-sm-12" style="white-space: pre;" appCustomtooltip>{{
                                                 user.address.city}}{{user.address.street}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
-                        <div class="row users-card" id="user-card{{user.id}}">
-                            <div class="col-sm-2 d-flex align-items-center p-0" style="padding-left: 10px !important;">
-                                <div class="circle" appRandomColor>
-                                    <p class="circle-inner">{{getInitials(user.name)}}</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-10">
-                                <div class="row">
-                                    <h5 class="col-sm-9" style="white-space: pre;" appCustomtooltip>{{
-                                        user.name.firstname
-                                        }} {{ user.name.lastname }}</h5>
-                                </div>
-                                <div class="row">
-                                    <span class="col-sm-6 pr-0" style="white-space: pre;border-right:solid 1px black;"
-                                        appCustomtooltip>{{ user.email }}</span>
-                                    <span class="col-sm-6 pl-0" style="white-space: pre;" appCustomtooltip> {{
-                                        user.phone
-                                        }}</span>
-                                </div>
-                                <div class="row">
-                                    <span class="col-sm-12" style="white-space: pre;" appCustomtooltip>{{
-                                        user.address.city}}{{user.address.street}}</span>
-                                </div>
-                            </div>
-                        </div><i class="fa fa-ellipsis-v" style="position: absolute;
+                        </div>
+
+                        <i class="fa fa-ellipsis-v" style="position: absolute;
                         top: 10px;
                         right: 25px;cursor:pointer;" (click)="toggleActionButton(user.id)" aria-hidden="true"></i>
 
                         <span class="row action-button" style="display: none;" id="action-button{{user.id}}">
                             <button class="col-sm-6 btn " (click)="editUser(user)"
-                                style="background-color: #73e43b;color: white; margin-left: 20%;"><i
+                                style="background-color: #73e43b;color: white !important; margin-left: 20%;"><i
                                     class="fas fa-pen"></i>Edit</button>
-                            <button class="col-sm-6 btn" (click)="deleteUser(user)" style="  background: red; color: white;margin-left: 5px;
+                            <button class="col-sm-6 btn" (click)="deleteUser(user)" style="  background: red; color: white !important;margin-left: 5px;
                             "><i class="fa fa-trash" aria-hidden="true"></i>
                                 Delete</button>
+
                         </span>
                     </div>
                 </div>
-                <div class="row" style="width: 100%;" *ngIf="userList.length <= displayLength">
+                <div class="row" style="width: 100%;" *ngIf="userList.length > currentPageData.length">
                     <app-pagination [items]="userList" [itemsPerPage]="itemsPerPage"
                         (pageChange)="handlePageChange($event)"></app-pagination>
                 </div>
@@ -122,30 +100,3 @@
         </div>
     </div>
 </div>
-<!-- <div class="row">
-    <div class="user-card col-sm-4">
-        <div class="container-fluid">
-            <div class="row user-img-block">
-                <div class="user-img" appRandomColor>
-                    <span>SS</span>
-                </div>
-            </div>
-            <div class="row user-details">
-                <div class="card-body">
-                    <h5 class="card-title">Shubham syal</h5>
-                    <div class="row card-text">
-                        CONTACT DETAILS:
-                        <span class="pr-0" style="white-space: pre;border-right:solid 1px black;"
-                            appCustomtooltip>assssssssssssssssssssssssssssssssssss</span>
-                        <span class="pl-0" style="white-space: pre;" appCustomtooltip>444444444444444444444444</span>
-                    </div>
-                    <div class="row card-text">
-                        ADDRESS:
-                        <span class="col-sm-12" style="white-space: pre;"
-                            appCustomtooltip>asdddddddddddddddddddddddddddddddd</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
