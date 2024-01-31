@@ -1,27 +1,39 @@
 # User
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli)
 
-## Development server
+# User Management App
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This project is an Angular 14  version 12.2.18. application for managing users. It includes user listing and user creation/updating features and also contains random color generator directive, pagination,tooltip directive, services for communication and some more features
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Follow these instructions to get a copy of the project up and running on your local machine.
 
-## Build
+### Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Make sure you have the following installed on your machine:
 
-## Running unit tests
+- Node.js: [Download and Install Node.js](https://nodejs.org/)
+- Angular CLI: Install globally using npm: `npm install -g @angular/cli`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Installing
 
-## Running end-to-end tests
+1. Clone the repository:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+   ```bash
+   git clone https://github.com/your-username/user-management-app.git
 
-## Further help
+2. Navigate to the project directory:
+   - cd user-management-app
+     
+3. Install dependencies:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+   - npm install
+
+### Running the Application
+
+1. Start the development server:
+   - ng serve
+
+2. Open your browser and navigate to http://localhost:4200/users/list. The app will automatically reload if you change any source files.
