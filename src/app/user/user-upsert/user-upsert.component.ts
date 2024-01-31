@@ -81,7 +81,7 @@ export class UserUpsertComponent implements OnInit {
   }
 
   // for stepwise form next button function which will check if
-  //  the visible inbuts are filled or not and shows next block of input
+  // the visible inbuts are filled or not and shows next block of input
   nextStep() {
     if (this.currentStep === 1 && !this.userForm.get('name.firstname')?.value && !this.userForm.get('name.lastname')?.value) {
       this.firstNameRequired = true;

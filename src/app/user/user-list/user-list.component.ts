@@ -22,6 +22,7 @@ export class UserListComponent implements OnInit {
   currentPage: number = 0;
   filter: string = "asc";
   toggle: boolean = false;
+  displayLength:number = 0;
   constructor(private dataService: DataService, private router: Router, private dialog: MatDialog, private toster: ToastrService) { }
 
   // function will take all the data in user list and sort accordingly
@@ -45,7 +46,7 @@ export class UserListComponent implements OnInit {
 
     const filteredData = this.filterDataBySearchTerm();
     // Load data based on the page number
-
+    this.displayLength = filteredData.length;
     // slicing data display on page wise per page 9
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;

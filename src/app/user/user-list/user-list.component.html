@@ -104,8 +104,12 @@
                     </div>
                     <!-- user data cards -->
                 </div>
+                <div class="row">
+                    <h5 *ngIf="!currentPageData.length" style="text-align: center;
+                    color: white;"> No data Found! </h5>
+                </div>
                 <!-- pagination -->
-                <div class="row" style="width: 100%;" *ngIf="userList.length > currentPageData.length">
+                <div class="row" style="width: 100%;" *ngIf=" displayLength > currentPageData.length ">
                     <app-pagination [items]="userList" [itemsPerPage]="itemsPerPage"
                         (pageChange)="handlePageChange($event)"></app-pagination>
                 </div>
