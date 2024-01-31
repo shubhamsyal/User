@@ -1,10 +1,10 @@
 // src/app/user/user-list/user-list.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../shared/data.service';
+import { DataService } from '../../shared/data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../common-components/confirmation-modal/confirmation-modal.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

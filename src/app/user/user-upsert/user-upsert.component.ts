@@ -3,9 +3,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from '../shared/data.service';
+import { DataService } from '../../shared/data.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../common-components/confirmation-modal/confirmation-modal.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
